@@ -27,6 +27,7 @@ final _formKey = GlobalKey<FormState>();
 class _LoginState extends State<Login> {
   // ignore: non_constant_identifier_names
   bool isLoading = false;
+  bool isHidden = false;
   double getSmallDiameter(BuildContext context) =>
       MediaQuery.of(context).size.width * 2 / 3;
   double getBiglDiameter(BuildContext context) =>
@@ -115,6 +116,14 @@ class _LoginState extends State<Login> {
         isLoading = false;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      isHidden = true;
+    });
   }
 
   @override
@@ -229,8 +238,13 @@ class _LoginState extends State<Login> {
                               return null;
                             },
                             controller: txtPassword,
-                            obscureText: true,
+                            obscureText: isHidden,
                             decoration: InputDecoration(
+                                suffixIcon: InkWell(
+                                    onTap: _togglepassword,
+                                    child: (isHidden)
+                                        ? const Icon(Icons.visibility_off)
+                                        : const Icon(Icons.visibility)),
                                 icon: const Icon(
                                   Icons.lock_open_rounded,
                                   color: Color.fromARGB(255, 245, 3, 3),
@@ -334,5 +348,11 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void _togglepassword() {
+    setState(() {
+      isHidden = !isHidden;
+    });
   }
 }

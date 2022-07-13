@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/home_page.dart';
 import 'package:frontend/models/user.dart';
+import 'package:frontend/screens/reset_password.dart';
 import 'package:frontend/widgets/display_image.dart';
 import 'package:frontend/screens/edit_name.dart';
 import 'package:frontend/screens/edit_address.dart';
@@ -152,6 +153,19 @@ class _ProfileState extends State<Profile> {
                             'Address', true, EditAddress()),
                         buildUserInfoDisplay(context, snapshot.data!.phone_no,
                             'Phone', true, EditPhone()),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                child: ElevatedButton(
+                              onPressed: () {
+                                navigateSecondPage(context, ResetPassword());
+                              },
+                              child: Text('reset password'),
+                            )),
+                          ],
+                        )
                       ],
                     ),
                   );
