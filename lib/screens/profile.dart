@@ -161,7 +161,7 @@ class _ProfileState extends State<Profile> {
               } else {
                 return Text('State: ${snapshot.connectionState}');
               }
-              return Text(snapshot.hasData.toString());
+              // return Text(snapshot.hasData.toString());
             }));
   }
 }

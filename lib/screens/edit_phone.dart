@@ -24,6 +24,11 @@ class _EditPhoneState extends State<EditPhone> {
   final txtPhone = TextEditingController();
   late bool isLoading = false;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   doUpdate() async {
     setState(() {
       isLoading = true;
