@@ -18,8 +18,8 @@ import 'package:frontend/utils/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:frontend/screens/device_map.dart';
-
-const String API_URL = 'http://10.147.17.205:8008/api/v1';
+import 'package:frontend/utils/config.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {
@@ -35,7 +35,7 @@ class _ProfileState extends State<Profile> {
   late Future<List<Device>> futureDevices;
 
   Future<List<Device>> fetchDevices() async {
-    const url = '$API_URL/devices/me';
+    const url = '${MonitaxConfig.API_BASE_URL}/devices/me';
     List<Device> devices = [];
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString('token');
@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<User> fetchUser() async {
-    const url = '$API_URL/users/me';
+    const url = '${MonitaxConfig.API_BASE_URL}/users/me';
     User? user;
     // Future<String?> token = getToken();
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -188,7 +188,7 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                   softWrap: true,
                                   maxLines: 2,
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -203,8 +203,8 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                   softWrap: true,
                                   maxLines: 2,
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ),
@@ -225,7 +225,7 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                 child: Text(
                                   'Serial#: ',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -237,8 +237,8 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                 child: Text(
                                   device.serial_num,
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ),
@@ -260,7 +260,7 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                 child: Text(
                                   'Status: ',
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -273,8 +273,8 @@ class _DeviceProfileState extends State<DeviceProfile> {
                                 child: Text(
                                   device.status,
                                   style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ),
@@ -295,7 +295,7 @@ class _DeviceProfileState extends State<DeviceProfile> {
                               child: Text(
                                 'Location',
                                 style: GoogleFonts.poppins(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
+                                    fontSize: 10, fontWeight: FontWeight.bold),
                               ),
                             )),
                             Container(
@@ -365,6 +365,23 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
+Widget ShimmerProfile(BuildContext context) {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey.shade500,
+    highlightColor: Colors.white,
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: <Widget>[
+          CircleAvatar(radius: 80),
+          Padding(padding: EdgeInsets.only(bottom: 320)),
+          ElevatedButton(onPressed: () {}, child: Text('reset password'))
+        ],
+      ),
+    ),
+  );
+}
+
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
@@ -373,20 +390,21 @@ class _UserProfileState extends State<UserProfile> {
         // initialData: initUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Center(child: CircularProgressIndicator()),
-                Visibility(
-                  visible: snapshot.hasData,
-                  child: const Text(
-                    'Loading',
-                    style: TextStyle(color: Colors.transparent, fontSize: 24),
-                  ),
-                ),
-              ],
-            );
+            return ShimmerProfile(context);
+            // return Column(
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     const Center(child: CircularProgressIndicator()),
+            //     Visibility(
+            //       visible: snapshot.hasData,
+            //       child: const Text(
+            //         'Loading',
+            //         style: TextStyle(color: Colors.transparent, fontSize: 24),
+            //       ),
+            //     ),
+            //   ],
+            // );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               // debugPrint(snapshot.toString());

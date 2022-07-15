@@ -10,6 +10,7 @@ import 'package:frontend/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:shimmer/shimmer.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:frontend/utils/config.dart';
@@ -99,28 +100,30 @@ class _HomePageState extends State<HomePage> {
           future: futureData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Center(
-                      child: CircularProgressIndicator(
-                    backgroundColor: Colors.transparent,
-                  )),
-                  Visibility(
-                    visible: snapshot.hasData,
-                    child: const Text(
-                      'Loading',
-                      style: TextStyle(color: Colors.transparent, fontSize: 24),
-                    ),
-                  ),
-                ],
-              );
+              return ShimmerCard(context);
+              // return Column(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     const Center(
+              //         child: CircularProgressIndicator(
+              //       backgroundColor: Colors.transparent,
+              //     )),
+              //     Visibility(
+              //       visible: snapshot.hasData,
+              //       child: const Text(
+              //         'Loading',
+              //         style: TextStyle(color: Colors.transparent, fontSize: 24),
+              //       ),
+              //     ),
+              //   ],
+              // );
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
                 showTopSnackBar(context,
                     const CustomSnackBar.error(message: 'Loading data failed'));
-                return MonitaxWidget(Data(sales: 0.0, trx: 0, tax: 0.0));
+                return ShimmerCard(
+                    context); //MonitaxWidget(Data(sales: 0.0, trx: 0, tax: 0.0));
                 // return const Text(
                 //   'Loading data failed\ncheck your internet connection',
                 //   style: TextStyle(color: Colors.red),
@@ -136,6 +139,19 @@ class _HomePageState extends State<HomePage> {
           }),
     );
   }
+}
+
+// ignore: non_constant_identifier_names
+Widget ShimmerCard(BuildContext context) {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey.shade500,
+    highlightColor: Colors.white,
+    child: GridView.count(
+      padding: const EdgeInsets.all(4),
+      crossAxisCount: 2,
+      children: const <Widget>[Card(), Card(), Card(), Card()],
+    ),
+  );
 }
 
 class MonitaxWidget extends StatelessWidget {
