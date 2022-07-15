@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class User {
@@ -22,6 +24,11 @@ class User {
       required this.devices});
 
   factory User.fromJson(Map<String, dynamic> json) {
+    debugPrint(json['devices'].toString());
+    List<Device> list = [];
+    for (final element in json['devices']) {
+      list.add(Device.fromJson(element));
+    }
     return User(
         id: json['id'],
         username: json['username'],
@@ -31,7 +38,7 @@ class User {
         address: json['address'],
         phone_no: json['phone_no'],
         role: json['role'],
-        devices: []);
+        devices: list);
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -51,28 +58,29 @@ class User {
 class Device {
   String id;
   String name;
-  String userid;
-  String serialnum;
+  String serial_num;
+  String description;
   double lat;
   double lon;
   String status;
-
+  bool isExpanded;
   Device(
       {required this.id,
       required this.name,
-      required this.userid,
-      required this.serialnum,
+      required this.serial_num,
+      required this.description,
       required this.lat,
       required this.lon,
-      required this.status});
+      required this.status,
+      this.isExpanded = false});
   factory Device.fromJson(Map<String, dynamic> json) {
     return Device(
         id: json['id'],
         name: json['name'],
-        userid: json['userid'],
-        serialnum: json['serialnum'] ?? '',
-        lat: json['lat'] ?? 0.0,
-        lon: json['lon'] ?? 0.0,
-        status: json['status'] ?? '');
+        serial_num: json['serial_num'],
+        description: json['description'],
+        lat: json['lat'],
+        lon: json['lon'],
+        status: json['status']);
   }
 }

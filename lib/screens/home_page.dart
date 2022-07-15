@@ -141,18 +141,27 @@ class MonitaxWidget extends StatelessWidget {
   final Data? data;
   const MonitaxWidget(this.data, {Key? key}) : super(key: key);
 
-  // Data userdata = data;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       padding: const EdgeInsets.all(4.0),
       crossAxisCount: 2,
       children: [
-        CustomCard(
-            title: 'Pendapatan hari ini ',
-            content: fortmatCurrency.format(data!.sales),
-            image: 'assets/images/earn.png',
-            color: Colors.blue),
+        GestureDetector(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => const AlertDialog(
+                      title: Text('Monitax'),
+                      content: Text('Not implemented yet'),
+                    ));
+          },
+          child: CustomCard(
+              title: 'Pendapatan hari ini ',
+              content: fortmatCurrency.format(data!.sales),
+              image: 'assets/images/earn.png',
+              color: Colors.blue),
+        ),
         CustomCard(
           title: 'Transaksi hari ini ',
           content: data!.trx.toString(),
