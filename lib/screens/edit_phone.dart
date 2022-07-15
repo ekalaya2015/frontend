@@ -9,8 +9,7 @@ import 'package:frontend/screens/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-const String API_URL = 'http://10.147.17.205:8008/api/v1';
+import 'package:frontend/utils/config.dart';
 
 class EditPhone extends StatefulWidget {
   EditPhone({Key? key}) : super(key: key);
@@ -35,7 +34,7 @@ class _EditPhoneState extends State<EditPhone> {
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
     var token = pref.getString('token');
-    var url = '$API_URL/users/me/profile';
+    var url = '${MonitaxConfig.API_BASE_URL}/users/me/profile';
     final body = jsonEncode({'phone_no': txtPhone.text});
     final response = await http
         .patch(Uri.parse(url),

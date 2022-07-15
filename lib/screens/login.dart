@@ -10,8 +10,7 @@ import 'package:frontend/utils/util.dart';
 import 'package:frontend/screens/home_page.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-const String API_URL = 'http://10.147.17.205:8008/api/v1';
+import 'package:frontend/utils/config.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -37,7 +36,7 @@ class _LoginState extends State<Login> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Future<String?> token = getToken();
     token.then((value) async {
-      const url = '$API_URL/users/me';
+      const url = '${MonitaxConfig.API_BASE_URL}/users/me';
       final response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Access-Control_Allow_Origin': '*',
@@ -68,7 +67,7 @@ class _LoginState extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    var url = '$API_URL/auth/access-token';
+    var url = '${MonitaxConfig.API_BASE_URL}/auth/access-token';
     Map<String, dynamic> body = {'username': username, 'password': password};
     // showLoaderDialog(context);
     try {

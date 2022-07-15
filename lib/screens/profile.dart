@@ -98,6 +98,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -118,7 +119,7 @@ class _ProfileState extends State<Profile> {
               title: const Text('Profile'),
               bottom: const TabBar(tabs: [
                 Tab(
-                  icon: Icon(Icons.abc),
+                  icon: Icon(Icons.account_circle_rounded),
                 ),
                 Tab(
                   icon: Icon(Icons.devices_other),

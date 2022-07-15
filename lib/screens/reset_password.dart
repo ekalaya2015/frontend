@@ -8,8 +8,7 @@ import 'package:frontend/screens/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
-const String API_URL = 'http://10.147.17.205:8008/api/v1';
+import 'package:frontend/utils/config.dart';
 
 class ResetPassword extends StatefulWidget {
   ResetPassword({Key? key}) : super(key: key);
@@ -42,7 +41,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     });
     SharedPreferences pref = await SharedPreferences.getInstance();
     var token = pref.getString('token');
-    var url = '$API_URL/users/me/reset-password';
+    var url = '${MonitaxConfig.API_BASE_URL}/users/me/reset-password';
     final body = jsonEncode({'password': txtNewPassword.text});
     final response = await http
         .post(Uri.parse(url),

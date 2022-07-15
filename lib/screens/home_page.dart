@@ -12,8 +12,8 @@ import 'package:frontend/screens/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:frontend/utils/config.dart';
 
-const String API_URL = 'http://10.147.17.205:8008/api/v1';
 final fortmatCurrency = NumberFormat.simpleCurrency(locale: 'id-ID');
 
 class HomePage extends StatefulWidget {
@@ -26,12 +26,13 @@ class _HomePageState extends State<HomePage> {
   late Future<Data> futureData;
   Future<Data> fetchData() async {
     Data? data;
-    var response =
-        await http.get(Uri.parse('$API_URL/invoices/analytics'), headers: {
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'Access-Control_Allow_Origin': '*',
-    });
+    var response = await http.get(
+        Uri.parse('${MonitaxConfig.API_BASE_URL}/invoices/analytics'),
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'Access-Control_Allow_Origin': '*',
+        });
     if (response.statusCode == 200) {
       data = Data.fromJson(jsonDecode(response.body));
     }
