@@ -93,8 +93,9 @@ class _EditAddressState extends State<EditAddress> {
                             minLines: 2,
                             maxLines: 3,
                             keyboardType: TextInputType.name,
-                            decoration:
-                                const InputDecoration(labelText: 'Address'),
+                            decoration: const InputDecoration(
+                                labelText: 'Address',
+                                prefixIcon: Icon(Icons.mail)),
                             controller: txtAddress,
                           ),
                         ),

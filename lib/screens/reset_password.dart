@@ -23,6 +23,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   final txtConfirmPassword = TextEditingController();
   late bool isLoading = false;
   bool isHidden = false;
+  bool isHidden2 = false;
 
   void _validateInputs() {
     if (_formkey.currentState!.validate()) {
@@ -73,6 +74,7 @@ class _ResetPasswordState extends State<ResetPassword> {
     super.initState();
     setState(() {
       isHidden = true;
+      isHidden2 = true;
     });
   }
 
@@ -117,8 +119,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                             suffixIcon: InkWell(
                               onTap: __togglepassword,
                               child: (isHidden)
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                             ),
                             labelText: 'New password',
                           ),
@@ -139,13 +141,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextFormField(
                           controller: txtConfirmPassword,
-                          obscureText: isHidden,
+                          obscureText: isHidden2,
                           decoration: InputDecoration(
                               suffixIcon: InkWell(
-                                onTap: __togglepassword,
-                                child: (isHidden)
-                                    ? const Icon(Icons.visibility_off)
-                                    : const Icon(Icons.visibility),
+                                onTap: __togglepassword2,
+                                child: (isHidden2)
+                                    ? const Icon(Icons.visibility)
+                                    : const Icon(Icons.visibility_off),
                               ),
                               labelText: 'Confirm password'),
                           validator: (value) {
@@ -193,6 +195,12 @@ class _ResetPasswordState extends State<ResetPassword> {
   void __togglepassword() {
     setState(() {
       isHidden = !isHidden;
+    });
+  }
+
+  void __togglepassword2() {
+    setState(() {
+      isHidden2 = !isHidden2;
     });
   }
 }

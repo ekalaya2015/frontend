@@ -333,6 +333,18 @@ class _DeviceProfileState extends State<DeviceProfile> {
     );
   }
 
+  // ignore: non_constant_identifier_names
+  Widget DeviceShimmer(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade500,
+      highlightColor: Colors.white,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.7,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -340,14 +352,13 @@ class _DeviceProfileState extends State<DeviceProfile> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Device> data = snapshot.data as List<Device>;
-          debugPrint(data.length.toString());
           return SingleChildScrollView(
             child: Container(
               child: buildPanel(data),
             ),
           );
         }
-        return const Text('Empty');
+        return DeviceShimmer(context); //Text('Empty');
       },
     );
   }
@@ -425,8 +436,13 @@ class _UserProfileState extends State<UserProfile> {
                               'https://t4.ftcdn.net/jpg/04/43/35/27/360_F_443352708_Pcf1kZAK856AGaXe1Nz4H0IjrrbezhUq.jpg',
                           onPressed: () {},
                         )),
-                    const SizedBox(
-                      height: 10.0,
+                    // const SizedBox(
+                    //   height: 10.0,
+                    // ),
+                    Text(
+                      snapshot.data!.role,
+                      style: GoogleFonts.poppins(
+                          fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     buildUserInfoDisplay(
                         context,

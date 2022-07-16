@@ -97,7 +97,8 @@ class _EditPhoneState extends State<EditPhone> {
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(labelText: 'Phone'),
+                          decoration: const InputDecoration(
+                              labelText: 'Phone', prefixText: '+62'),
                           controller: txtPhone,
                         ),
                       ),
